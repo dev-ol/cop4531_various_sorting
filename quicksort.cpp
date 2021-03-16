@@ -1,12 +1,13 @@
 
 /**
- * Counting Sorting 
+ * Quick Sorting 
 */
 
 #include <iostream>
 using namespace std;
 
-void QuickSort(int arr[], int size, int range);
+void QuickSort(int arr[], int startIndex, int endIndex);
+int Partition(int arr[], int startIndex, int endIndex);
 
 int main(){
     int size = 5;
@@ -23,7 +24,7 @@ int main(){
 
     cout << endl;
 
-    CountingSort(arr, size, range);
+    QuickSort(arr, 0, len);
 
     cout << "After sort : ";
     for(int i = 0; i < size; i++){
@@ -34,30 +35,33 @@ int main(){
     return 0;
 }
 
-void QuickSort(int arr[], int size, int range){
-    int arrayB[size];
-    int arrayC[range];
+void QuickSort(int arr[], int startIndex, int endIndex){
+   if(startIndex< endIndex){
+       int part = Partition(arr,startIndex, endIndex);
+       QuickSort(arr, startIndex, (part-1));
+       QuickSort(arr, (part+1), endIndex);
 
-    //set all element to zero
-    for(int i = 0; i < range; i++){
-        arrayC[i]=0;
+   }
+}
+
+int Partition(int arr[], int startIndex, int endIndex){
+    int pivot = arr[endIndex];
+    int index = startIndex;
+
+    for(int i = startIndex; i < endIndex; i++){
+
+        if(arr[i] < pivot){
+            int temp = arr[i];
+            arr[i] = arr[index];
+            arr[index] = temp;
+
+            index++;
+        }
     }
 
-    //count all elements in arr
-    for(int i = 0; i < size; i++){
-        ++arrayC[arr[i]];
-    }
+    int temp = arr[endIndex];
+    arr[endIndex] = arr[index];
+    arr[index] = temp;
 
-    for(int i = 1; i < range; i++){
-        arrayC[i]= arrayC[i] + arrayC[i-1];
-    }
-
-    //placing arr elements into the output arrayC in the right position
-    for(int i = 0; i < size; i++){
-        arrayB[--arrayC[arr[i]]]= arr[i];
-    }
-
-     for(int i = 0; i < size; i++){
-       arr[i]= arrayB[i];
-    }
+    return index;
 }
