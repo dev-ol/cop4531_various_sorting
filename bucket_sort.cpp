@@ -1,6 +1,6 @@
 
 /**
- * Counting Sorting 
+ * Bucket Sorting 
 */
 
 #include <iostream>
@@ -9,11 +9,11 @@
 
 using namespace std;
 
-void BucketSort(int arr[], int size);
+void BucketSort(double arr[], int size);
 
 int main(){
 
-    int arr [] = {9,3,1,5,3};
+    double arr [] = {0.9,3,1,5,3};
 
     int len = sizeof(arr) / sizeof(arr[0]);
 
@@ -23,7 +23,7 @@ int main(){
     }
 
     cout << endl;
-    cout << "start here" << endl;
+  
     BucketSort(arr, len);
 
     cout << "After sort : ";
@@ -35,9 +35,9 @@ int main(){
     return 0;
 }
 
-void BucketSort(int arr[], int size){
+void BucketSort(double arr[], int size){
     //buckets
-    vector<int> bucket[size];
+    vector<double> bucket[size];
     int tempIndex = 0;
     
     //filling bucket with elements
