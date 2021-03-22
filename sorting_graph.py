@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def main():
     
     resultsFiles = ["heap_sort", "quicksort", "merge_sort",
-                    "radix_sort","counting_sort","bucket_sort"]
+                    "radix_sort","counting_sort","bucket_sort", "insertion_sort"]
     xs = []
     ys = []
 
