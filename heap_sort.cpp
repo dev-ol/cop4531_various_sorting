@@ -1,37 +1,52 @@
 
 /**
- * heap Sorting 
+ * heap Sorting  66815
  * https://www.youtube.com/watch?v=yXluViYl-DM
 */
-
+#include <chrono> 
 #include <iostream>
+#include <ctime> 
+#include <fstream>
 using namespace std;
+using namespace std::chrono; 
 
 void heapSort(int arr[], int size);
 void heapify(int arr[], int size, int i);
-
 void  buildHeap(int arr[], int size);
+void RunTest();
+void GenerateArray(int arr[], int amount);
 
 int main(){
-    int myarr [] = {9,3,1,5,2};
+    RunTest();
+    // int myarr [100000];
 
-    int len = sizeof(myarr) / sizeof(myarr[0]);
+    // GenerateArray(myarr, 100000);
 
-    cout << "Before sort : ";
-    for(int i = 0; i < len; i++){
-        cout << myarr[i] << " ";
-    }
+    // int len = sizeof(myarr) / sizeof(myarr[0]);
 
-    cout << endl;
+    // cout << "Before sort : ";
+    // for(int i = 0; i < len/10; i++){
+    //     cout << myarr[i] << " ";
+    // }
 
-    heapSort(myarr, len);
-    
-    cout << "After sort : ";
-    for(int i = 0; i < len; i++){
-        cout << myarr[i] << " ";
-    }
+    // cout << endl;
 
-    cout << endl;
+    //  auto start = high_resolution_clock::now(); 
+    // heapSort(myarr, len);
+    // auto stop = high_resolution_clock::now(); 
+
+    // cout << "After sort : ";
+    // for(int i = 0; i < len/10; i++){
+    //     cout << myarr[i] << " ";
+    // }
+
+    // cout << endl;
+
+    // auto duration = duration_cast<microseconds>(stop - start); 
+  
+    // cout << "Time taken by function: "
+    //      << duration.count() << " microseconds" << endl; 
+
     return 0;
 }
 
@@ -70,4 +85,46 @@ void heapify(int arr[], int size, int i){
         heapify(arr, size, large);
     }
 
+}
+
+void RunTest(){
+    ifstream testFile("array_length_tests.txt");
+    ofstream resultFile("results/heap_sort.txt");
+    
+    int x = 0, count =1;
+    
+     cout << "Starting Test" << endl;
+    while(testFile >> x){
+        cout << "Test " << count << " : " << x << endl;
+
+        int test_array[x];
+        GenerateArray(test_array, x);
+
+        auto start = high_resolution_clock::now(); 
+        heapSort(test_array, x);
+        auto stop = high_resolution_clock::now(); 
+
+        auto duration = duration_cast<microseconds>(stop - start);
+
+        resultFile << "x = " <<x <<" y = "
+         << duration.count() << "" << endl; 
+         count++;
+    }
+    
+    resultFile.close();
+
+    testFile.close();
+
+    cout << "Test complete " <<endl;
+
+}
+
+void GenerateArray(int array[], int amount){
+  
+ srand((unsigned)time(0)); 
+     
+    for(int i=0; i<amount; i++){ 
+        array[i] = (rand()%100)+1; 
+        //cout << array[i] << endl;
+ } 
 }

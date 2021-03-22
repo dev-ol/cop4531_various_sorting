@@ -1,0 +1,19 @@
+1000
+Time taken for 1000 elements: 852 microseconds
+5000
+Time taken for 5000 elements: 25061 microseconds
+50000
+Time taken for 50000 elements: 2329115 microseconds
+100000
+Time taken for 100000 elements: 9167480 microseconds
+150000
+Time taken for 150000 elements: 19775775 microseconds
+200000
+Time taken for 200000 elements: 36395690 microseconds
+250000
+Time taken for 250000 elements: 56807408 microseconds
+500000
+Time taken for 500000 elements: 222825757 microseconds
+1000000
+Time taken for 1000000 elements: 892863317 microseconds
+1500000

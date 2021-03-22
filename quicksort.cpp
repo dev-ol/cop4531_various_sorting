@@ -2,55 +2,66 @@
 /**
  * Quick Sorting 
 */
-
+#include <chrono>
 #include <iostream>
+#include <ctime>
+#include <fstream>
 using namespace std;
+using namespace std::chrono;
 
 void QuickSort(int arr[], int startIndex, int endIndex);
 int Partition(int arr[], int startIndex, int endIndex);
+void GenerateArray(int arr[], int amount);
+void RunTest();
 
-int main(){
-    int size = 5;
-    int range = 10;
+int main()
+{
+    RunTest();
+    // int size = 5;
+    // int range = 10;
 
-    int arr [size] = {9,3,1,5,3};
+    // int arr [size] = {9,3,1,5,3};
 
-    int len = sizeof(arr) / sizeof(arr[0]);
+    // int len = sizeof(arr) / sizeof(arr[0]);
 
-    cout << "Before sort : ";
-    for(int i = 0; i < len; i++){
-        cout << arr[i] << " ";
-    }
+    // cout << "Before sort : ";
+    // for(int i = 0; i < len; i++){
+    //     cout << arr[i] << " ";
+    // }
 
-    cout << endl;
+    // cout << endl;
 
-    QuickSort(arr, 0, len);
+    // QuickSort(arr, 0, len-1);
 
-    cout << "After sort : ";
-    for(int i = 0; i < size; i++){
-        cout << arr[i] << " ";
-    }
+    // cout << "After sort : ";
+    // for(int i = 0; i < size; i++){
+    //     cout << arr[i] << " ";
+    // }
 
-    cout << endl;
+    // cout << endl;
     return 0;
 }
 
-void QuickSort(int arr[], int startIndex, int endIndex){
-   if(startIndex< endIndex){
-       int part = Partition(arr,startIndex, endIndex);
-       QuickSort(arr, startIndex, (part-1));
-       QuickSort(arr, (part+1), endIndex);
-
-   }
+void QuickSort(int arr[], int startIndex, int endIndex)
+{
+    if (startIndex < endIndex)
+    {
+        int part = Partition(arr, startIndex, endIndex);
+        QuickSort(arr, startIndex, (part - 1));
+        QuickSort(arr, (part + 1), endIndex);
+    }
 }
 
-int Partition(int arr[], int startIndex, int endIndex){
+int Partition(int arr[], int startIndex, int endIndex)
+{
     int pivot = arr[endIndex];
     int index = startIndex;
 
-    for(int i = startIndex; i < endIndex; i++){
+    for (int i = startIndex; i < endIndex; i++)
+    {
 
-        if(arr[i] < pivot){
+        if (arr[i] < pivot)
+        {
             int temp = arr[i];
             arr[i] = arr[index];
             arr[index] = temp;
@@ -64,4 +75,50 @@ int Partition(int arr[], int startIndex, int endIndex){
     arr[index] = temp;
 
     return index;
+}
+
+void RunTest()
+{
+    
+    ifstream testFile("array_length_tests.txt");
+    ofstream resultFile("results/quicksort.txt");
+
+    int x = 0, count =1;
+    cout << "Starting Test" << endl;
+    
+    while (testFile >> x)
+    {
+        cout << "Test " << count << " : " << x << endl;
+
+        int test_array[x];
+        GenerateArray(test_array, x);
+
+        auto start = high_resolution_clock::now();
+        QuickSort(test_array, 0, x - 1);
+
+        auto stop = high_resolution_clock::now();
+
+        auto duration = duration_cast<microseconds>(stop - start);
+
+        resultFile << "x = " <<x <<" y = "
+         << duration.count() << "" << endl; 
+         count++;
+    }
+
+
+    resultFile.close();
+
+    testFile.close();
+
+    cout << "Test complete " <<endl;
+}
+void GenerateArray(int array[], int amount)
+{
+
+    srand((unsigned)time(0));
+
+    for (int i = 0; i < amount; i++)
+    {
+        array[i] = (rand() % 100) + 1;
+    }
 }
