@@ -112,6 +112,7 @@ void RunTest()
 
     cout << "Test complete " <<endl;
 }
+
 void GenerateArray(int array[], int amount)
 {
 
