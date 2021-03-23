@@ -42,7 +42,7 @@ def main():
         
 
 def plotGraph(name,xs, ys):
-    print("Creating Graph for {}.".format(name))
+    print("\nCreating Graph for {}.".format(name))
 
     #print(xs)
     #print(ys)
