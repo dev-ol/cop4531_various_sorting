@@ -12,78 +12,60 @@
 using namespace std;
 using namespace std::chrono;
 
-void CountingSort(vector<int> & list, int max, int min);
-void GenerateArray(vector<int> & list, int amount);
+void CountingSort(vector<int> &list, int max, int min);
+void GenerateArray(vector<int> &list, int amount);
 void RunTest();
 
+int main()
+{
 
-int main(){
-    
     RunTest();
-    // vector<int> list;
-    // GenerateArray(list, 1500000);
 
-    // int max = *max_element(list.begin(), list.end());
-    // int min = *min_element(list.begin(), list.end());
-    // //= {9,3,1,5,3};
-
-    // //int len = sizeof(arr) / sizeof(arr[0]);
-
-    // cout << "Before sort : ";
-    // for(int i = 0; i < 100; i++){
-    //     cout << list[i] << " ";
-    // }
-
-    // cout << endl;
-
-    // CountingSort(list, max, min);
-
-    // cout << "After sort : ";
-    // for(int i = 0; i < 100; i++){
-    //     cout << list[i] << " ";
-    // }
-
-    // cout << endl;
     return 0;
 }
 
-void CountingSort(vector<int> & list, int max, int min){
+void CountingSort(vector<int> &list, int max, int min)
+{
 
     int size = list.size();
-    vector<int> listC((max - min +1));
+    vector<int> listC((max - min + 1));
     vector<int> listB(size);
-   
+
     //count all elements in arr
-    for(int i = 0; i < size; i++){
-        ++listC[list[i]-min];
+    for (int i = 0; i < size; i++)
+    {
+        ++listC[list[i] - min];
     }
 
     int cSize = listC.size();
 
-    for(int i = 1; i < cSize; i++){
-        listC[i]= listC[i] + listC[i-1];
+    for (int i = 1; i < cSize; i++)
+    {
+        listC[i] = listC[i] + listC[i - 1];
     }
 
     //placing arr elements into the output arrayC in the right position
-    for(int i = 0; i < size; i++){
-        listB[listC[list[i]-min] -1]= list[i];
-        --listC[list[i]-min];
+    for (int i = 0; i < size; i++)
+    {
+        listB[listC[list[i] - min] - 1] = list[i];
+        --listC[list[i] - min];
     }
 
-     for(int i = 0; i < size; i++){
-       list[i]= listB[i];
+    for (int i = 0; i < size; i++)
+    {
+        list[i] = listB[i];
     }
 }
 
 void RunTest()
 {
-    
+
     ifstream testFile("array_length_tests.txt");
     ofstream resultFile("results/counting_sort.txt");
 
-    int x = 0, count =1;
+    int x = 0, count = 1;
     cout << "Starting Test" << endl;
-    
+
     while (testFile >> x)
     {
         cout << "Test " << count << " : " << x << endl;
@@ -93,7 +75,6 @@ void RunTest()
 
         int max = *max_element(list.begin(), list.end());
         int min = *min_element(list.begin(), list.end());
-        
 
         auto start = high_resolution_clock::now();
         CountingSort(list, max, min);
@@ -102,26 +83,24 @@ void RunTest()
 
         auto duration = duration_cast<microseconds>(stop - start);
 
-        resultFile << "x = " <<x <<" y = "
-         << duration.count() << "" << endl; 
-         count++;
+        resultFile << "x = " << x << " y = "
+                   << duration.count() << "" << endl;
+        count++;
     }
 
     resultFile.close();
 
     testFile.close();
 
-    cout << "Test complete " <<endl;
+    cout << "Test complete " << endl;
 }
 
-
-void GenerateArray(vector<int> & list, int amount)
+void GenerateArray(vector<int> &list, int amount)
 {
     srand((unsigned)time(0));
 
     for (int i = 0; i < amount; i++)
     {
-        list.push_back( (rand() % 100) + 1);
+        list.push_back((rand() % 100) + 1);
     }
-
 }

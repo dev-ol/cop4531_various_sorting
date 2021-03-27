@@ -17,28 +17,7 @@ void RunTest();
 int main()
 {
     RunTest();
-    // int size = 5;
-    // int range = 10;
 
-    // int arr [size] = {9,3,1,5,3};
-
-    // int len = sizeof(arr) / sizeof(arr[0]);
-
-    // cout << "Before sort : ";
-    // for(int i = 0; i < len; i++){
-    //     cout << arr[i] << " ";
-    // }
-
-    // cout << endl;
-
-    // QuickSort(arr, 0, len-1);
-
-    // cout << "After sort : ";
-    // for(int i = 0; i < size; i++){
-    //     cout << arr[i] << " ";
-    // }
-
-    // cout << endl;
     return 0;
 }
 
@@ -79,13 +58,13 @@ int Partition(int arr[], int startIndex, int endIndex)
 
 void RunTest()
 {
-    
+
     ifstream testFile("array_length_tests.txt");
     ofstream resultFile("results/quicksort.txt");
 
-    int x = 0, count =1;
+    int x = 0, count = 1;
     cout << "Starting Test" << endl;
-    
+
     while (testFile >> x)
     {
         cout << "Test " << count << " : " << x << endl;
@@ -100,17 +79,16 @@ void RunTest()
 
         auto duration = duration_cast<microseconds>(stop - start);
 
-        resultFile << "x = " <<x <<" y = "
-         << duration.count() << "" << endl; 
-         count++;
+        resultFile << "x = " << x << " y = "
+                   << duration.count() << "" << endl;
+        count++;
     }
-
 
     resultFile.close();
 
     testFile.close();
 
-    cout << "Test complete " <<endl;
+    cout << "Test complete " << endl;
 }
 
 void GenerateArray(int array[], int amount)

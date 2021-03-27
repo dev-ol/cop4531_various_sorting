@@ -3,7 +3,6 @@
  * Radix Sorting 
 */
 
-
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -13,58 +12,29 @@
 using namespace std;
 using namespace std::chrono;
 
-void RadixSort(vector<int> & list);
-void CountingSort(vector<int> & list, int max, int min, int divisor);
+void RadixSort(vector<int> &list);
+void CountingSort(vector<int> &list, int max, int min, int divisor);
 int maxElement(vector<int> list);
 void GenerateArray(vector<int> &list, int amount);
 void RunTest();
 
-
 int main()
 {
     RunTest();
-
-    // vector<int> list;
-    // GenerateArray(list, 1500000);
-
-    // int max = *max_element(list.begin(), list.end());
-    // int min = *min_element(list.begin(), list.end());
-
-    // cout << "Before sort : ";
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     cout << list[i] << " ";
-    // }
-
-    // cout << endl;
-
-    // RadixSort(list);
-
-    // cout << "After sort : ";
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     cout << list[i] << " ";
-    // }
-
-    // cout << endl;
-    // return 0;
 }
 
-
-
-void RadixSort(vector<int> & list)
+void RadixSort(vector<int> &list)
 {
     int maxEle = maxElement(list);
-    
+
     int max = *max_element(list.begin(), list.end());
     int min = *min_element(list.begin(), list.end());
-        
 
     for (int i = 1; (maxEle / i) > 0; i *= 10)
     {
         CountingSort(list, max, min, i);
     }
-} 
+}
 int maxElement(vector<int> list)
 {
     int max = list[0];
@@ -81,10 +51,10 @@ int maxElement(vector<int> list)
     return max;
 }
 
-void CountingSort(vector<int> & list, int max, int min, int divisor)
+void CountingSort(vector<int> &list, int max, int min, int divisor)
 {
     int size = list.size();
-    vector<int> listC((max - min +1));
+    vector<int> listC((max - min + 1));
     vector<int> listB(size);
 
     //count all elements in arr
@@ -92,7 +62,6 @@ void CountingSort(vector<int> & list, int max, int min, int divisor)
     {
         ++listC[(list[i] / divisor) % 10];
     }
-
 
     int cSize = listC.size();
 
@@ -114,16 +83,15 @@ void CountingSort(vector<int> & list, int max, int min, int divisor)
     }
 }
 
-
 void RunTest()
 {
-    
+
     ifstream testFile("array_length_tests.txt");
     ofstream resultFile("results/radix_sort.txt");
 
-    int x = 0, count =1;
+    int x = 0, count = 1;
     cout << "Starting Test" << endl;
-    
+
     while (testFile >> x)
     {
         cout << "Test " << count << " : " << x << endl;
@@ -138,18 +106,17 @@ void RunTest()
 
         auto duration = duration_cast<microseconds>(stop - start);
 
-        resultFile << "x = " <<x <<" y = "
-         << duration.count() << "" << endl; 
-         count++;
+        resultFile << "x = " << x << " y = "
+                   << duration.count() << "" << endl;
+        count++;
     }
 
     resultFile.close();
 
     testFile.close();
 
-    cout << "Test complete " <<endl;
+    cout << "Test complete " << endl;
 }
-
 
 void GenerateArray(vector<int> &list, int amount)
 {

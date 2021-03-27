@@ -10,79 +10,50 @@
 #include <chrono>
 #include <fstream>
 using namespace std;
-using namespace std::chrono; 
+using namespace std::chrono;
 
-void InsertionSort(vector<int> & list);
-void GenerateArray(vector<int> & list, int amount);
+void InsertionSort(vector<int> &list);
+void GenerateArray(vector<int> &list, int amount);
 void RunTest();
 
-int main(){
+int main()
+{
     RunTest();
-
-//     vector<int> list;
-//     GenerateArray(list, 1500000);
-
-
-//     // int arr [100000];
-
-//     // GenerateArray(list, 100000);
-
-//     //int len = sizeof(arr) / sizeof(arr[0]);
-
-//     cout << "Before InsertionSort : ";
-//     for(int i = 0; i < 100; i++){
-//         cout << list[i] << " ";
-//     }
-
-//     cout << endl;
-//    // auto start = high_resolution_clock::now(); 
-//     InsertionSort(list);
-//    // auto stop = high_resolution_clock::now(); 
-
-//      cout << "After InsertionSort : ";
-//     for(int i = 0; i < 100; i++){
-//         cout << list[i] << ",";
-//     }
-
-//     cout << endl;
-
-//     //  auto duration = duration_cast<microseconds>(stop - start); 
-  
-//     // cout << "Time taken by function: "
-//     //      << duration.count() << " microseconds" << endl; 
     return 0;
 }
 
-void InsertionSort(vector<int> & list){
+void InsertionSort(vector<int> &list)
+{
 
     int key;
     int j = 0;
     int size = list.size();
 
-    for(int i = 1; i< size; i++){
+    for (int i = 1; i < size; i++)
+    {
         key = list[i];
-        j = i-1;
+        j = i - 1;
 
-        while(j>=0 && list[j] > key){
+        while (j >= 0 && list[j] > key)
+        {
 
-            list[j+1] = list[j];
-            j = j-1;
+            list[j + 1] = list[j];
+            j = j - 1;
         }
 
-        list[j+1] = key;
+        list[j + 1] = key;
     }
 }
 
-
 void RunTest()
 {
-    
+
     ifstream testFile("array_length_tests.txt");
     ofstream resultFile("results/insertion_sort.txt");
 
-    int x = 0, count =1;
+    int x = 0, count = 1;
     cout << "Starting Test" << endl;
-    
+
     while (testFile >> x)
     {
         cout << "Test " << count << " : " << x << endl;
@@ -90,36 +61,32 @@ void RunTest()
         vector<int> list;
         GenerateArray(list, x);
 
-
         auto start = high_resolution_clock::now();
-    
+
         InsertionSort(list);
 
         auto stop = high_resolution_clock::now();
 
         auto duration = duration_cast<microseconds>(stop - start);
 
-        resultFile << "x = " <<x <<" y = "
-         << duration.count() << "" << endl; 
-         count++;
+        resultFile << "x = " << x << " y = "
+                   << duration.count() << "" << endl;
+        count++;
     }
-
 
     resultFile.close();
 
     testFile.close();
 
-    cout << "Test complete " <<endl;
+    cout << "Test complete " << endl;
 }
 
-
-void GenerateArray(vector<int> & list, int amount)
+void GenerateArray(vector<int> &list, int amount)
 {
     srand((unsigned)time(0));
 
     for (int i = 0; i < amount; i++)
     {
-        list.push_back( (rand() % 100) + 1);
+        list.push_back((rand() % 100) + 1);
     }
-
 }
